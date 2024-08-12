@@ -1,10 +1,12 @@
 import Header from '../../components/Header/Header'
+import MapPage from '../../components/Run/MapPage';
 
 const HomePage = () => {
   return (
     <div>
       <Header />
-      <div>HomePage</div>
+      {/* <Run /> */}
+      <MapPage />
     </div>
   )
 }
