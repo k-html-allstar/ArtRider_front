@@ -1,13 +1,14 @@
 import HomePage from "../pages/Home/HomePage";
 import LoginPage from "../pages/Auth/LoginPage";
 import LoginRedirectPage from "../pages/Auth/LoginRedirectPage";
+import SplashPage from "../pages/Splash/SplashPage";
 import { TRoute } from "../types/commonTypes";
 
 export const BASIC_ROUTES_URL = {
     root: {
         name: '홈페이지',
         path: () => '/',
-        component: HomePage,
+        component: SplashPage,
     },
     home: {
         name: '홈페이지',
@@ -24,6 +25,7 @@ export const BASIC_ROUTES_URL = {
         path: () => '/oauth/kakao/callback',
         component: LoginRedirectPage
     },
+    // path 추가
 } as const;
 
 export const BASIC_ROUTES: TRoute[] = Object.values(BASIC_ROUTES_URL);
