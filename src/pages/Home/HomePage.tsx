@@ -1,11 +1,12 @@
 import Header from '../../components/Header/Header'
-import Run from '../../components/Run/Run'
+import MapPage from '../../components/Run/MapPage';
 
 const HomePage = () => {
   return (
     <div>
       <Header />
-      <Run />
+      {/* <Run /> */}
+      <MapPage />
     </div>
   )
 }

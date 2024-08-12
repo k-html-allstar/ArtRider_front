@@ -13,7 +13,8 @@ export default ({ mode }: any) => {
         minify: true,
         inject: {
           data: {
-            naverKey: env.VITE_NAVER_MAP_API_KEY
+            naverKey: env.VITE_NAVER_MAP_API_KEY,
+            tMapKey: env.VITE_TMAP_API_KEY
           },
         },
       }),
