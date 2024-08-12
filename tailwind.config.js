@@ -5,6 +5,17 @@ export default {
   mode: "jit", // css calc()
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    colors: {
+      'bg-primary' : '#16BE5C',
+      'bg-secondary' : '#E3FFE7',
+      'mainWhite' : '#FFFFFF',
+      'bg-mainWhite' : '#F7F8FA',
+      'bg-strokeWhite' : '#D5F0E1',
+      'primary-gray' : '#767676',
+      'secondary-gray' : '#AAAAAA',
+      'mainRed' : '#E5E5E5',
+      'mainBlack' : '#000000',
+    },
     extend: {
       minWidth: px0_1000,
       minHeight: px0_1000,
