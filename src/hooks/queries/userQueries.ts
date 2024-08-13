@@ -1,11 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { $axios } from "../../lib/axios";
 import { useUserStore, useUserToken } from "../../store/userStore";
 import { userInfoProps } from "../../types/userTypes";
 import toast from "react-hot-toast";
 
-export const useLogin = () => {
+export const useLogin = (): UseMutationResult<userInfoProps, unknown, void, unknown> => {
     const authorizationCode = new URL(window.location.href).searchParams.get('code');
     const navigate = useNavigate();
     const setUser = useUserStore((state) => state.setUser);
