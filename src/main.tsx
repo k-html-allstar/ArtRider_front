@@ -4,7 +4,8 @@ import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { ToastPosition, Toaster } from "react-hot-toast";
-import { Global, css } from '@emotion/react';
+import { Global, css } from "@emotion/react";
+import { OverlayProvider } from "@toss/use-overlay";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +22,7 @@ const globalStyles = css`
   * {
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Pretendard', sans-serif;
+    font-family: "Pretendard", sans-serif;
   }
 `;
 
@@ -46,13 +47,14 @@ const toastProps = {
   },
 };
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <Toaster position={toastProps.position} toastOptions={toastProps.options} />
-      <Global styles={globalStyles} />
-      <App />
-      </QueryClientProvider>
+      <OverlayProvider>
+        <Toaster position={toastProps.position} toastOptions={toastProps.options} />
+        <Global styles={globalStyles} />
+        <App />
+      </OverlayProvider>
+    </QueryClientProvider>
   </BrowserRouter>
 );
-
