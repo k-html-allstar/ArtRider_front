@@ -3,6 +3,7 @@ import LoginPage from "../pages/Auth/LoginPage";
 import LoginRedirectPage from "../pages/Auth/LoginRedirectPage";
 import SplashPage from "../pages/Splash/SplashPage";
 import { TRoute } from "../types/commonTypes";
+import BikingPage from "../pages/Biking/BikingPage";
 
 export const BASIC_ROUTES_URL = {
     root: {
@@ -25,6 +26,11 @@ export const BASIC_ROUTES_URL = {
         path: () => '/oauth/kakao/callback',
         component: LoginRedirectPage
     },
+    biking: {
+        name: '바이킹 페이지',
+        path: () => '/biking',
+        component: BikingPage
+    }
     // path 추가
 } as const;
 

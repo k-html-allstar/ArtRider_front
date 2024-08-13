@@ -1,45 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
+import { coordProps, spotProps } from '../../types/bikingTypes'
 import axios from 'axios';
 
-type coordProps = {
-    startX: string;
-    startY: string;
-    endX: string;
-    endY: string;
+type DirectionProps = {
+    setDistance: React.Dispatch<React.SetStateAction<number>>;
+    missionCoords: coordProps[];
+    setHistoryCoords: React.Dispatch<React.SetStateAction<spotProps[]>>;
 }
 
-// position을 coordProps 객체로 변환
-const position: coordProps = {
-    startX: "126.983937",
-    startY: "37.564991",
-    endX: "126.988940",
-    endY: "37.566158"
-};
+const Direction = ({ setDistance, missionCoords, setHistoryCoords}: DirectionProps) => {
 
-const TMap: React.FC = () => {
-    const appKey = import.meta.env.VITE_TMAP_API_KEY;
-    
-
-
-    // Tmap 스크립트 로드 함수
-    const loadTmapScript = (appKey: string) => {
+    const loadTmapScript = () => {
         return new Promise<void>((resolve, reject) => {
             if (window.Tmapv2) {
                 resolve(); // 이미 로드된 경우
                 return;
             }
             const script = document.createElement('script');
-            script.src = `https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${appKey}`;
+            script.src = `https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${import.meta.env.VITE_TMAP_API_KEY}`;
             script.onload = () => resolve();
             script.onerror = () => reject(new Error('Failed to load Tmap script'));
             document.body.appendChild(script);
         });
     };
 
-    // 지도 초기화 및 API 요청
     const initTmap = async (position: coordProps) => {
         try {
-            await loadTmapScript(appKey);
+            await loadTmapScript();
 
             if (!window.Tmapv2) {
                 throw new Error('Tmapv2 is not available');
@@ -58,16 +45,15 @@ const TMap: React.FC = () => {
                     startName: "출발지",
                     endName: "도착지"
                 },
-                { headers: { appKey } }
+                { headers: { appKey: import.meta.env.VITE_TMAP_API_KEY } }
             );
 
             const resultData = response.data.features;
             const drawInfoArr: Tmapv2.LatLng[] = [];
 
             // 결과 처리
-            const tDistance = `총 거리 : ${(resultData[0].properties.totalDistance / 1000).toFixed(1)}km,`;
-            const tTime = ` 총 시간 : ${(resultData[0].properties.totalTime / 60).toFixed(0)}분`;
-            document.getElementById('result')!.textContent = tDistance + tTime;
+            const tDistance = resultData[0].properties.totalDistance / 1000; // km로 변환
+            setDistance(prevDistance => prevDistance + tDistance);
 
             resultData.forEach((data: any) => {
                 const geometry = data.geometry;
@@ -81,24 +67,30 @@ const TMap: React.FC = () => {
                 } 
             });
 
-            // TODO: 길찾기 좌표 저장
-            console.log('drawInfoArr', drawInfoArr);
+            const latLngCoords = drawInfoArr.map(coord => ({
+                lat: coord._lat,
+                lng: coord._lng
+            }));
+
+            // historyCoords 업데이트
+            setHistoryCoords(prevCoords => [...prevCoords, ...latLngCoords]);
 
         } catch (error) {
             console.error("Error initializing Tmap:", error);
         }
     };
 
+    // missionCoords 안에 있는 좌표 반복문 
     useEffect(() => {
-        initTmap(position);
+        missionCoords.forEach(position => {
+            initTmap(position);
+        });
     }, []);
 
-    return (
-        <div>
-            <div id="map_div" style={{ width: "100%", height: "400px" }}></div>
-            <p id="result"></p>
-        </div>
-    );
-};
 
-export default TMap;
+  return (
+    <div></div>
+  )
+}
+
+export default Direction
