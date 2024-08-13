@@ -99,11 +99,8 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
 
   useEffect(() => {
     const { naver } = window;
-    console.log(isClicked);
 
     if (map && location && isClicked) {
-      console.log(isClicked);
-
       const { lat, lng } = location;
       const newLocation = new naver.maps.LatLng(lat, lng);
 
