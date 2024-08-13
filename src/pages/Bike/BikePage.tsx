@@ -4,8 +4,15 @@ import { spotProps } from "../../types/bikingTypes";
 import NaverMap from "../../components/Biking/NaverMap";
 import NavBar from "../../components/NavBar/NavBar";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import Created from "../../components/Main/Created";
+import Creating from "../../components/Main/Creating";
 
 const BikePage = () => {
+  const { state: level } = useLocation();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showCreatedModal, setShowCreatedModal] = useState<boolean>(false);
+
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [coords, setCoords] = useState<spotProps[]>([]); // coords를 상태로 관리
   const [historyCoords, setHistoryCoords] = useState<spotProps[]>([]);
@@ -21,7 +28,7 @@ const BikePage = () => {
           // longitude: location.lng,
           latitude: 37.28202732 - 0.00025,
           longitude: 127.23995931 + 0.00021,
-          missionLevel: "medium",
+          missionLevel: level,
         },
         {
           headers: {
@@ -39,7 +46,12 @@ const BikePage = () => {
       }
 
       setCoords(updatedCoords);
-      // console.log("응답 데이터:", updatedCoords);
+      setIsLoading(false);
+      setShowCreatedModal(true);
+
+      setTimeout(() => {
+        setShowCreatedModal(false);
+      }, 2000);
     } catch (error) {
       console.error("API 요청 중 오류 발생:", error);
     }
@@ -102,6 +114,9 @@ const BikePage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      {isLoading && <Creating />}
+      {coords && showCreatedModal && <Created />}
+
       <div className="flex-grow">
         {location && coords.length !== 0 && (
           <NaverMap location={location} coords={coords} historyCoords={historyCoords} />

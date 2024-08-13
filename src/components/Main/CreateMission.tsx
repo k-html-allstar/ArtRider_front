@@ -3,6 +3,7 @@ import arrowLeft from "../../assets/arrow_left.svg";
 import arrowRight from "../../assets/arrow_right.svg";
 import Creating from "./Creating";
 import Created from "./Created";
+import { useNavigate } from "react-router-dom";
 
 const levelMapping = {
   easy: "쉬움",
@@ -17,8 +18,8 @@ export default function CreateMission({
   selectedBtn: number | null;
   closeModal: () => void;
 }) {
-  const [status, setStatus] = useState<"before" | "creating" | "created">("before");
   const [level, setLevel] = useState<"easy" | "medium" | "hard">("easy");
+  const navigate = useNavigate();
 
   function changeLevel(btn: "left" | "right") {
     if (btn === "left") {
@@ -37,7 +38,7 @@ export default function CreateMission({
   }
 
   function createMission() {
-    setStatus("created");
+    navigate("/bike", { state: level });
   }
   return (
     <div
@@ -51,42 +52,36 @@ export default function CreateMission({
           transform: "translate(-50%, -50%)",
         }}
       >
-        {status === "created" && <Created />}
-        {status === "creating" && <Creating />}
-        {status === "before" && (
-          <>
-            <h4 className="text-16 font-medium text-center mb-70">난이도 선택하기</h4>
-            <div className="flex items-center justify-between mb-80">
-              <button
-                className="w-35 h-35 bg-[#EEEEEE] rounded-full flex justify-center items-center"
-                onClick={() => changeLevel("left")}
-              >
-                <img src={arrowLeft} alt="arrowLeft" />
-              </button>
-              <span className="font-semibold text-[#676767] text-18">{levelMapping[level]}</span>
-              <button
-                className="w-35 h-35 bg-[#EEEEEE] rounded-full flex justify-center items-center"
-                onClick={() => changeLevel("right")}
-              >
-                <img src={arrowRight} alt="arrowLeft" />
-              </button>
-            </div>
-            <div className="flex items-center justify-center gap-10">
-              <button
-                onClick={closeModal}
-                className="bg-[#E2E2E2] flex justify-center items-center py-15 px-20 rounded-12 text-[#727272] text-16 font-medium"
-              >
-                취소하기
-              </button>
-              <button
-                onClick={createMission}
-                className=" flex-grow bg-bg-primary flex justify-center items-center py-15 rounded-12 text-white text-16 font-medium"
-              >
-                자동으로 생성하기
-              </button>
-            </div>
-          </>
-        )}
+        <h4 className="text-16 font-medium text-center mb-70">난이도 선택하기</h4>
+        <div className="flex items-center justify-between mb-80">
+          <button
+            className="w-35 h-35 bg-[#EEEEEE] rounded-full flex justify-center items-center"
+            onClick={() => changeLevel("left")}
+          >
+            <img src={arrowLeft} alt="arrowLeft" />
+          </button>
+          <span className="font-semibold text-[#676767] text-18">{levelMapping[level]}</span>
+          <button
+            className="w-35 h-35 bg-[#EEEEEE] rounded-full flex justify-center items-center"
+            onClick={() => changeLevel("right")}
+          >
+            <img src={arrowRight} alt="arrowLeft" />
+          </button>
+        </div>
+        <div className="flex items-center justify-center gap-10">
+          <button
+            onClick={closeModal}
+            className="bg-[#E2E2E2] flex justify-center items-center py-15 px-20 rounded-12 text-[#727272] text-16 font-medium"
+          >
+            취소하기
+          </button>
+          <button
+            onClick={createMission}
+            className=" flex-grow bg-bg-primary flex justify-center items-center py-15 rounded-12 text-white text-16 font-medium"
+          >
+            자동으로 생성하기
+          </button>
+        </div>
       </div>
     </div>
   );
