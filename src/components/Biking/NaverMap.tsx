@@ -18,6 +18,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [start, setStart] = useState<boolean>(false);
   const [spotMarker, setSpotMarker] = useState<naver.maps.Marker | null>(null); // Spot Marker 상태 추가
+  const [isFinished, setIsFinished] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window;
@@ -176,8 +177,35 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
         onClick={() => setStart(true)}
         style={{ transform: "translate(-50%, 50%)" }}
       >
-        {start ? <img src={startIcon} /> : <img src={pause} />}
+        {start ? <img src={startIcon} /> : <img src={pause} onClick={() => setIsFinished(true)} />}
       </div>
+
+      {isFinished && (
+        <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 z-[9999]">
+          <div
+            className="absolute top-[50%] left-[50%] z-[10000] w-362 h-292 rounded-20 bg-white p-20"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <div className="flex items-center justify-between ">
+              <div className="w-full flex flex-col items-center text-[#676767] font-19">
+                <div>축하해요!</div>
+                <div>목표한 거리를 모두 완주했어요</div>
+              </div>
+            </div>
+            <div className="flex items-center justify-center gap-10">
+              <button className="bg-[#E2E2E2] flex justify-center items-center py-15 px-20 rounded-12 text-[#727272] text-16 font-medium">
+                닫기
+              </button>
+              <button className=" flex-grow bg-bg-primary flex justify-center items-center py-15 rounded-12 text-white text-16 font-medium">
+                캘린더 탭으로 가기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
   3;

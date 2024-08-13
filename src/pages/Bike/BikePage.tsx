@@ -68,12 +68,14 @@ const BikePage = () => {
             const newLocation = { lat: latitude, lng: longitude };
             setLocation(newLocation);
 
+            // 좌표 간 거리를 계산해서 distance에 더해줘
             // historyCoords에 현재 위치가 없는 경우에만 추가
             setHistoryCoords((prevHistory) => {
               if (
                 !prevHistory.some(
                   (coord) =>
-                    Math.abs(coord.y - latitude) < 0.0001 && Math.abs(coord.x - longitude) < 0.001
+                    Math.abs(coord.y - latitude) < 0.000001 &&
+                    Math.abs(coord.x - longitude) < 0.000001
                 )
               ) {
                 return [...prevHistory, { y: latitude, x: longitude }];
@@ -126,7 +128,7 @@ const BikePage = () => {
         </Backdrop>
       )}
 
-      <div className="flex-grow pt-23">
+      <div className="flex-grow">
         {location && coords.length !== 0 && (
           <NaverMap location={location} coords={coords} historyCoords={historyCoords} />
         )}
