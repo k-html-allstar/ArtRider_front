@@ -126,7 +126,7 @@ const BikePage = () => {
         </Backdrop>
       )}
 
-      <div className="flex-grow">
+      <div className="flex-grow pt-23">
         {location && coords.length !== 0 && (
           <NaverMap location={location} coords={coords} historyCoords={historyCoords} />
         )}

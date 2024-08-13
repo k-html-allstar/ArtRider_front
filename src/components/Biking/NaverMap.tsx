@@ -1,5 +1,9 @@
 import { useRef, useEffect, useState } from "react";
 import { spotProps } from "../../types/bikingTypes";
+import focused from "../../assets/focused.svg"; // 트래킹
+import focus from "../../assets/focus.svg";
+import pause from "../../assets/pause.svg";
+import startIcon from "../../assets/start.svg";
 
 type NaverMapProps = {
   location: { lat: number; lng: number };
@@ -12,6 +16,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [marker, setMarker] = useState<naver.maps.Marker | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [start, setStart] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window;
@@ -121,16 +126,24 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   }, [isClicked, map, location]);
 
   return (
-    <div>
-      <div ref={mapRef} style={{ width: "500px", height: "500px" }} />
+    <div className="h-full w-full  z-50  ">
+      <div ref={mapRef} className="w-500 h-700"></div>
+      <div className="absolute left-5 bottom-28 z-60 cursor-pointer  bg-white w-48 h-48 flex justify-center items-center rounded-full">
+        <div className="w-24 h-24 " onClick={() => setIsClicked(!isClicked)}>
+          {isClicked ? <img src={focused} /> : <img src={focus} />}
+        </div>
+      </div>
+
       <div
-        className="w-100 h-100 bg-[#ffff00] cursor-pointer"
-        onClick={() => setIsClicked(!isClicked)}
+        className="absolute left-[50%] right-[50%] bottom-[140px] w-63 h-63 cursor-pointer"
+        onClick={() => setStart(true)}
+        style={{ transform: "translate(-50%, 50%)" }}
       >
-        트래킹 {isClicked.toString()}
+        {start ? <img src={startIcon} /> : <img src={pause} />}
       </div>
     </div>
   );
+  3;
 };
 
 export default NaverMap;
