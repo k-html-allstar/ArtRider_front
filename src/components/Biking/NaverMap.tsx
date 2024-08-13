@@ -66,6 +66,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   // 내 위치에 마커 찍기
   useEffect(() => {
     const { naver } = window;
+
     if (map && location) {
       const { lat, lng } = location;
       const newLocation = new naver.maps.LatLng(lat, lng);
