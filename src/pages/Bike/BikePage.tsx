@@ -8,6 +8,9 @@ import { useLocation } from "react-router-dom";
 import Created from "../../components/Main/Created";
 import Creating from "../../components/Main/Creating";
 import Backdrop from "../../components/Utils/Backdrop";
+import RemainingDistance from "../../components/Biking/RemainingDistance";
+import { username } from "../../data/dummy";
+import GainCoupon from "../../components/Biking/GainCoupon";
 
 const BikePage = () => {
   const { state: level } = useLocation();
@@ -130,6 +133,10 @@ const BikePage = () => {
         {location && coords.length !== 0 && (
           <NaverMap location={location} coords={coords} historyCoords={historyCoords} />
         )}
+        {/* <div className="absolute top-[80px] w-full px-20 overflow-hidden">
+          <RemainingDistance username={username} distance={1}/>
+        </div> */}
+        <GainCoupon />
       </div>
       <NavBar />
     </div>
