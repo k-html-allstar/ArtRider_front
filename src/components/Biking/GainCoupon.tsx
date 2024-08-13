@@ -23,7 +23,7 @@ export default function GainCoupon({ timeToShow }: { timeToShow: number }) {
   }
 
   return (
-    <div className="absolute top-[80px] w-full px-20 rounded-20 overflow-hidden">
+    <div className="absolute top-[180px] w-full px-20 rounded-20 overflow-hidden z-[600]">
       <div
         className={cls("p-20 flex justify-between items-center bg-bg-secondary w-full rounded-20")}
       >

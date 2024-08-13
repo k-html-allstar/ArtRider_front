@@ -135,10 +135,10 @@ const BikePage = () => {
         {location && coords.length !== 0 && (
           <NaverMap location={location} coords={coords} historyCoords={historyCoords} />
         )}
-        {/* <div className="absolute top-[80px] w-full px-20 overflow-hidden">
-          <RemainingDistance username={username} distance={1}/>
-        </div> */}
-        <GainCoupon />
+        <div className="absolute top-[80px] w-full px-20 overflow-hidden">
+          <RemainingDistance username={username} distance={1} />
+        </div>
+        {/* <GainCoupon /> */}
       </div>
       <NavBar />
     </div>

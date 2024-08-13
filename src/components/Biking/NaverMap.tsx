@@ -1,9 +1,12 @@
 import { useRef, useEffect, useState } from "react";
+import Lottie from "react-lottie";
 import { spotProps } from "../../types/bikingTypes";
 import focused from "../../assets/focused.svg"; // 트래킹
 import focus from "../../assets/focus.svg";
-import pause from "../../assets/pause.svg";
-import startIcon from "../../assets/start.svg";
+import startIcon from "../../assets/pause.svg";
+import pause from "../../assets/start.svg";
+import animationData from "../../assets/award.json";
+import GainCoupon from "./GainCoupon";
 
 type NaverMapProps = {
   location: { lat: number; lng: number };
@@ -19,6 +22,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   const [start, setStart] = useState<boolean>(false);
   const [spotMarker, setSpotMarker] = useState<naver.maps.Marker | null>(null); // Spot Marker 상태 추가
   const [isFinished, setIsFinished] = useState<boolean>(false);
+  const [showCoupon, setShowCoupon] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window;
@@ -28,7 +32,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
 
       const mapInstance = new naver.maps.Map(mapRef.current, {
         center: centerLocation,
-        zoom: 18,
+        zoom: 20,
       });
 
       setMap(mapInstance);
@@ -163,6 +167,13 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
     }
   }, [isClicked, map, location]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("coupon");
+      setShowCoupon(true);
+    }, 15000);
+  }, []);
+
   return (
     <div className="h-full w-full  z-50  ">
       <div ref={mapRef} className="w-500 h-700"></div>
@@ -180,27 +191,41 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
         {start ? <img src={startIcon} /> : <img src={pause} onClick={() => setIsFinished(true)} />}
       </div>
 
+      {showCoupon && <GainCoupon timeToShow={3000} />}
+
       {isFinished && (
         <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 z-[9999]">
           <div
-            className="absolute top-[50%] left-[50%] z-[10000] w-362 h-292 rounded-20 bg-white p-20"
+            className="absolute top-[50%] left-[50%] z-[10000] w-362 h-320 rounded-20 bg-white p-20"
             onClick={(e) => e.stopPropagation()}
             style={{
               transform: "translate(-50%, -50%)",
             }}
           >
-            <div className="flex items-center justify-between ">
-              <div className="w-full flex flex-col items-center text-[#676767] font-19">
+            <div className="flex flex-col items-center">
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData,
+                  rendererSettings: {
+                    preserveAspectRatio: "xMidYMid slice",
+                  },
+                }}
+                height={150}
+                width={150}
+              />
+              <div className="w-full flex flex-col items-center text-[#676767] text-19 mb-20">
                 <div>축하해요!</div>
                 <div>목표한 거리를 모두 완주했어요</div>
               </div>
             </div>
             <div className="flex items-center justify-center gap-10">
-              <button className="bg-[#E2E2E2] flex justify-center items-center py-15 px-20 rounded-12 text-[#727272] text-16 font-medium">
+              <button className="bg-[#E2E2E2] flex justify-center items-center py-15 px-20 rounded-12 text-[#727272] text-16 font-medium min-w-100">
                 닫기
               </button>
               <button className=" flex-grow bg-bg-primary flex justify-center items-center py-15 rounded-12 text-white text-16 font-medium">
-                캘린더 탭으로 가기
+                공유하러 가기
               </button>
             </div>
           </div>
