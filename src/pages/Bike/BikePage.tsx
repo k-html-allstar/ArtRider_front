@@ -27,29 +27,30 @@ const BikePage = () => {
     // { y: 37.2800636, x: 127.2365217 },
     // { y: 37.2800676, x: 127.2365219 },
   ]);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // TODO: 5초마다 좌표 추가 -> 배열에 값이 없을 때 마다 추가로 변경
-  useEffect(() => {
-    // 5초마다 좌표를 추가하는 인터벌 설정
-    const intervalId = setInterval(() => {
-      if (currentIndex < coords.length) {
-        const newCoord = coords[currentIndex];
-        setHistoryCoords((prevHistory) => {
-          // 중복된 좌표가 없는 경우에만 추가
-          if (!prevHistory.some((coord) => coord.y === newCoord.y && coord.x === newCoord.x)) {
-            return [...prevHistory, newCoord];
-          }
-          return prevHistory;
-        });
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      } else {
-        clearInterval(intervalId);
-      }
-    }, 5000);
+  // const [currentIndex, setCurrentIndex] = useState(0);
 
-    return () => clearInterval(intervalId);
-  }, [currentIndex]);
+  // // TODO: 5초마다 좌표 추가 -> 배열에 값이 없을 때 마다 추가로 변경
+  // useEffect(() => {
+  //   // 5초마다 좌표를 추가하는 인터벌 설정
+  //   const intervalId = setInterval(() => {
+  //     if (currentIndex < coords.length) {
+  //       const newCoord = coords[currentIndex];
+  //       setHistoryCoords((prevHistory) => {
+  //         // 중복된 좌표가 없는 경우에만 추가
+  //         if (!prevHistory.some((coord) => coord.y === newCoord.y && coord.x === newCoord.x)) {
+  //           return [...prevHistory, newCoord];
+  //         }
+  //         return prevHistory;
+  //       });
+  //       setCurrentIndex((prevIndex) => prevIndex + 1);
+  //     } else {
+  //       clearInterval(intervalId);
+  //     }
+  //   }, 5000);
+
+  //   return () => clearInterval(intervalId);
+  // }, [currentIndex]);
 
   // 현재 위치 업데이트
   useEffect(() => {
@@ -66,7 +67,7 @@ const BikePage = () => {
               if (
                 !prevHistory.some(
                   (coord) =>
-                    Math.abs(coord.y - latitude) < 0.0001 && Math.abs(coord.x - longitude) < 0.0001
+                    Math.abs(coord.y - latitude) < 0.0001 && Math.abs(coord.x - longitude) < 0.001
                 )
               ) {
                 return [...prevHistory, { y: latitude, x: longitude }];

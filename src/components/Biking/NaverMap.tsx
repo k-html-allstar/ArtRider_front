@@ -11,7 +11,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [marker, setMarker] = useState<naver.maps.Marker | null>(null);
-  const [tracking, setTracking] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window;
@@ -40,12 +40,8 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
           new naver.maps.Polyline({
             map, // 사용할 지도 객체
             path: pathArray, // LatLng 객체 배열
-            strokeColor: "#16be5c", //'#16be5c', // 선 색상
-            strokeWeight: 5, // 선 두께
-            strokeOpacity: 0.2,
-            strokeStyle: "dash",
-            startIcon: 2,
-            startIconSize: 20,
+            strokeColor: "lightgray", // 선 색상
+            strokeWeight: 3, // 선 두께
           });
         }
       }
@@ -101,10 +97,40 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
     }
   }, [location, map]);
 
+  useEffect(() => {
+    const { naver } = window;
+    console.log(isClicked);
+
+    if (map && location && isClicked) {
+      console.log(isClicked);
+
+      const { lat, lng } = location;
+      const newLocation = new naver.maps.LatLng(lat, lng);
+
+      // 트래킹 모드일 때
+      const projection = map.getProjection();
+      const positionPoint = projection.fromCoordToOffset(newLocation); // LatLng -> 화면 좌표로 변환
+
+      // 특정 픽셀만큼 이동 (예: 200px 위, 200px 오른쪽)
+      const offsetPoint = new naver.maps.Point(positionPoint.x, positionPoint.y);
+
+      // 화면 좌표를 다시 LatLng로 변환
+      const newCenter = projection.fromOffsetToCoord(offsetPoint);
+
+      // 지도 중심 이동
+      map.setCenter(newCenter);
+    }
+  }, [isClicked, map, location]);
+
   return (
     <div>
       <div ref={mapRef} style={{ width: "500px", height: "500px" }} />
-      <button className="w-100 h-100">내위치</button>
+      <div
+        className="w-100 h-100 bg-[#ffff00] cursor-pointer"
+        onClick={() => setIsClicked(!isClicked)}
+      >
+        트래킹 {isClicked.toString()}
+      </div>
     </div>
   );
 };
