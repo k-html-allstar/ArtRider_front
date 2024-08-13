@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import sample from '../../assets/icon.svg'
+import { useUserToken } from '../../store/userStore';
+import sample from '../../assets/icon.svg';
 
 const SplashPage = () => {
   const navigate = useNavigate();
+  const token = useUserToken((state) => state.accessToken);
+
   useEffect(() => {
     setTimeout(() => {
-      navigate('/home');
+      if (token) {
+        navigate('/main');
+      } else {
+        navigate('/home');
+      }
     }, 3000);
-  }, [navigate]);
+  }, [navigate, token]);
 
   return (
     <div className="h-screen w-full bg-bg-primary">
@@ -16,7 +23,7 @@ const SplashPage = () => {
             <div>
                 <img src={sample} width={74} height={74} alt="logo" />
             </div>
-            <div className="font-Pretendard font-bold  text-[26px] text-mainWhite">타세용</div>
+            <div className="font-Pretendard font-bold mt-[6px] text-[26px] text-mainWhite">타세용</div>
         </div>
     </div>
   )

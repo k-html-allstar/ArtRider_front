@@ -8,6 +8,7 @@ export default {
     colors: {
       'bg-primary' : '#16BE5C',
       'bg-secondary' : '#E3FFE7',
+      'bg-background' : '#F7F8FA',
       'mainWhite' : '#FFFFFF',
       'bg-mainWhite' : '#F7F8FA',
       'bg-strokeWhite' : '#D5F0E1',
@@ -15,6 +16,7 @@ export default {
       'secondary-gray' : '#AAAAAA',
       'mainRed' : '#E5E5E5',
       'mainBlack' : '#000000',
+      'kakao-yellow' : '#FEE500',
     },
     extend: {
       minWidth: px0_1000,

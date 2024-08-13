@@ -1,4 +1,4 @@
-import Header from "./Header";
+import Header from "./LoginComponent";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {

@@ -1,8 +1,9 @@
 import HomePage from "../pages/Home/HomePage";
-import LoginPage from "../pages/Auth/LoginPage";
+// import LoginPage from "../pages/Auth/LoginPage";
 import LoginRedirectPage from "../pages/Auth/LoginRedirectPage";
 import SplashPage from "../pages/Splash/SplashPage";
 import { TRoute } from "../types/commonTypes";
+import MainPage from "../pages/Main/MainPage";
 
 export const BASIC_ROUTES_URL = {
     root: {
@@ -15,17 +16,16 @@ export const BASIC_ROUTES_URL = {
         path: () => '/home',
         component: HomePage,
     },
-    login: {
-        name: '로그인',
-        path: () => '/login',
-        component: LoginPage
-    },
     auth: {
         name: '로그인 리다이렉트',
         path: () => '/oauth/kakao/callback',
         component: LoginRedirectPage
     },
-    // path 추가
+    main: {
+        name: '메인',
+        path: () => '/main',
+        component: MainPage,
+    }
 } as const;
 
 export const BASIC_ROUTES: TRoute[] = Object.values(BASIC_ROUTES_URL);
