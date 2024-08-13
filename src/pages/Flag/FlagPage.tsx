@@ -1,7 +1,7 @@
 import Header from "../../components/Header/Header";
 import NavBar from "../../components/NavBar/NavBar";
 
-const MainPage = () => {
+const FlagPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -13,4 +13,4 @@ const MainPage = () => {
   );
 }
 
-export default MainPage;
+export default FlagPage;
