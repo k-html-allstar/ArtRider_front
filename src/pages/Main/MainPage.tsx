@@ -1,7 +1,12 @@
+import Header from "../../components/Header/Header"
+// import NavBar from "../../components/NavBar/NavBar"
 
 const MainPage = () => {
   return (
-    <div>MainPage</div>
+    <div>
+      <Header/>
+      {/* <NavBar/> */}
+    </div>
   )
 }
 

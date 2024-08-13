@@ -1,5 +1,5 @@
 import sample from '../../assets/icon.svg';
-import LoginComponent from '../../components/Header/LoginComponent';
+import LoginComponent from '../../components/Login/LoginComponent';
 import { useUserStore, useUserToken } from '../../store/userStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

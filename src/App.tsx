@@ -4,7 +4,7 @@ import { BASIC_ROUTES } from './routes/basicRouter';
 const App = () => {
   return (
     <div className="flex flex-row justify-center items-center">
-      <div className="w-[390px] h-[780px]">
+      <div className="w-[390px] h-screen bg-bg-background ">
         <Routes>
           {BASIC_ROUTES.map((route) => {
             return <Route key={route.name} path={route.path()} element={<route.component />} />;
