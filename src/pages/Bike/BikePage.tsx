@@ -3,54 +3,47 @@ import Header from "../../components/Header/Header";
 import { spotProps } from "../../types/bikingTypes";
 import NaverMap from "../../components/Biking/NaverMap";
 import NavBar from "../../components/NavBar/NavBar";
+import axios from "axios";
 
 const BikePage = () => {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [coords, setCoords] = useState<spotProps[]>([]); // coords를 상태로 관리
+  const [historyCoords, setHistoryCoords] = useState<spotProps[]>([]);
+  const [missionStarted, setMissionStarted] = useState(false);
 
-  // TODO: BE 통신 (원하는 경로)
-  const coords: spotProps[] = [
-    { y: 37.2820329, x: 127.2412078 },
-    { y: 37.2828274, x: 127.2409512 },
-    { y: 37.2828108, x: 127.2409721 },
-    { y: 37.2827259, x: 127.2410808 },
-    { y: 37.2800636, x: 127.2365217 },
-    { y: 37.2820329, x: 127.2412078 },
-    { y: 37.2800676, x: 127.2365219 },
-  ];
-  coords.push(coords[0]);
+  // 서버에 POST 요청을 보내고 응답값을 coords에 저장
+  const postMission = async (location: { lat: number; lng: number }) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_AI_URL}/mission`,
+        {
+          // latitude: location.lat,
+          // longitude: location.lng,
+          latitude: 37.28202732 - 0.00025,
+          longitude: 127.23995931 + 0.00021,
+          missionLevel: "medium",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  const [historyCoords, setHistoryCoords] = useState<spotProps[]>([
-    // { y: 37.2820329, x: 127.2365224 },
-    // { y: 37.2828274, x: 127.2409512 },
-    // { y: 37.2828108, x: 127.2409721 },
-    // { y: 37.2827259, x: 127.2410808 },
-    // { y: 37.2800636, x: 127.2365217 },
-    // { y: 37.2800676, x: 127.2365219 },
-  ]);
+      // 서버 응답 데이터를 coords 상태로 저장
+      const updatedCoords = response.data.coordinates;
 
-  // const [currentIndex, setCurrentIndex] = useState(0);
+      // 첫 번째 요소를 마지막에 추가하여 새로운 배열 생성
+      if (updatedCoords.length > 0) {
+        updatedCoords.push(updatedCoords[0]);
+      }
 
-  // // TODO: 5초마다 좌표 추가 -> 배열에 값이 없을 때 마다 추가로 변경
-  // useEffect(() => {
-  //   // 5초마다 좌표를 추가하는 인터벌 설정
-  //   const intervalId = setInterval(() => {
-  //     if (currentIndex < coords.length) {
-  //       const newCoord = coords[currentIndex];
-  //       setHistoryCoords((prevHistory) => {
-  //         // 중복된 좌표가 없는 경우에만 추가
-  //         if (!prevHistory.some((coord) => coord.y === newCoord.y && coord.x === newCoord.x)) {
-  //           return [...prevHistory, newCoord];
-  //         }
-  //         return prevHistory;
-  //       });
-  //       setCurrentIndex((prevIndex) => prevIndex + 1);
-  //     } else {
-  //       clearInterval(intervalId);
-  //     }
-  //   }, 5000);
-
-  //   return () => clearInterval(intervalId);
-  // }, [currentIndex]);
+      setCoords(updatedCoords);
+      // console.log("응답 데이터:", updatedCoords);
+    } catch (error) {
+      console.error("API 요청 중 오류 발생:", error);
+    }
+  };
 
   // 현재 위치 업데이트
   useEffect(() => {
@@ -98,11 +91,21 @@ const BikePage = () => {
     return () => clearInterval(locationIntervalId);
   }, []);
 
+  // location이 업데이트될 때마다 postMission 호출
+  useEffect(() => {
+    if (location && !missionStarted) {
+      postMission(location); // location 객체를 그대로 전달
+      setMissionStarted(true); // 미션 시작 상태로 변경
+    }
+  }, [location, missionStarted]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow">
-        {location && <NaverMap location={location} coords={coords} historyCoords={historyCoords} />}
+        {location && coords.length !== 0 && (
+          <NaverMap location={location} coords={coords} historyCoords={historyCoords} />
+        )}
       </div>
       <NavBar />
     </div>
