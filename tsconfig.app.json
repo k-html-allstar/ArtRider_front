@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/components/Run/MapPage.tsx"]
+  "include": ["src", "src/components/Biking/MapPage.tsx"]
 }

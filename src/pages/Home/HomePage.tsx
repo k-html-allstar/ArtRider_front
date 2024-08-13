@@ -1,12 +1,12 @@
 import Header from '../../components/Header/Header'
-import MapPage from '../../components/Run/MapPage';
+import MapPage from '../../components/Biking/MapPage';
 
 const HomePage = () => {
   return (
     <div>
       <Header />
       {/* <Run /> */}
-      <MapPage />
+      {/* <MapPage /> */}
     </div>
   )
 }
