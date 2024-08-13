@@ -9,9 +9,9 @@ const LoginRedirectPage = () => {
   }, [login]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-bg-primary">
       <div className="text-center">
-        <p>로그인 처리 중입니다...</p>
+        <p className = "font-Pretendard font-normal text-center text-[18px] text-bg-mainWhite">로그인 처리 중입니다...</p>
       </div>
     </div>
   );

@@ -1,15 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { useUserStore, useUserToken } from '../../store/userStore';
+import hamburgermenu from '../../assets/hamburgermuenu.svg';
 
 const Header = () => {
-    const user = useUserStore((state) => state.user);
-    const token = useUserToken((state)=>state.accessToken);
-    const navigate = useNavigate();
-
   return (
-    <div className='flex justify-between'>
-        <div>Header</div>
-        { token && user ? ( <div>{user.name}님</div>) : (<div onClick={()=>navigate('/login')} className='bg-yellow-400 px-5 cursor-pointer'>로그인</div>)}
+    <div className = "flex flex-row px-14 py-2 mt-8 justify-between items-center">
+      <div className="font-Pretendard text-center font-bold mt-[6px] text-[18px] text-bg-primary">타세용</div>
+      <img src={hamburgermenu} width={24} height={24} alt="logo" className = "mt-4"/>
     </div>
   )
 }
