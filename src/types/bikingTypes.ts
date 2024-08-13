@@ -6,6 +6,6 @@ export type coordProps = {
 }
 
 export type spotProps = {
-    lat: number,
-    lng: number,
+    y: number,
+    x: number,
 }
