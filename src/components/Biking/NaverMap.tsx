@@ -17,6 +17,7 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   const [marker, setMarker] = useState<naver.maps.Marker | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [start, setStart] = useState<boolean>(false);
+  const [spotMarker, setSpotMarker] = useState<naver.maps.Marker | null>(null); // Spot Marker 상태 추가
 
   useEffect(() => {
     const { naver } = window;
@@ -82,11 +83,11 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
       }
 
       const markerContent = `
-                <div style="back: 2px solid white">
-                    <div style="border: 6.5px solid rgb(228, 111, 90); background-color: white;  border-radius: 50%; width: 20px; height: 20px">
-                    </div>
-                </div>
-            `;
+              <div style="back: 2px solid white">
+                  <div style="border: 6.5px solid rgb(228, 111, 90); background-color: white;  border-radius: 50%; width: 20px; height: 20px">
+                  </div>
+              </div>
+          `;
 
       // 새로운 마커 생성
       const newMarker = new naver.maps.Marker({
@@ -102,6 +103,42 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
       setMarker(newMarker);
     }
   }, [location, map]);
+
+  // Spot Marker
+  useEffect(() => {
+    const { naver } = window;
+
+    if (map) {
+      const x = 127.2404362018919;
+      const y = 37.28178745513513;
+      const newLocation = new naver.maps.LatLng(y, x);
+
+      // 기존 Spot Marker 삭제
+      if (spotMarker) {
+        spotMarker.setMap(null);
+      }
+
+      const markerContent = `
+            <div style="back: 2px solid white">
+                <div style="border: 4px solid #16BE5C; background-color: white;  border-radius: 50%; width: 20px; height: 20px">
+                </div>
+            </div>
+          `;
+
+      // 새로운 마커 생성
+      const newSpotMarker = new naver.maps.Marker({
+        position: newLocation,
+        map,
+        icon: {
+          content: markerContent,
+          anchor: new naver.maps.Point(10, 10), // 마커의 위치 설정
+        },
+      });
+
+      // 마커 상태 업데이트
+      setSpotMarker(newSpotMarker);
+    }
+  }, [map]);
 
   useEffect(() => {
     const { naver } = window;
