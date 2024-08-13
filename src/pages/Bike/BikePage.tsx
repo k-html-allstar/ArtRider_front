@@ -7,6 +7,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Created from "../../components/Main/Created";
 import Creating from "../../components/Main/Creating";
+import Backdrop from "../../components/Utils/Backdrop";
 
 const BikePage = () => {
   const { state: level } = useLocation();
@@ -114,8 +115,16 @@ const BikePage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      {isLoading && <Creating />}
-      {coords && showCreatedModal && <Created />}
+      {isLoading && (
+        <Backdrop>
+          <Creating />
+        </Backdrop>
+      )}
+      {coords && showCreatedModal && (
+        <Backdrop>
+          <Created />
+        </Backdrop>
+      )}
 
       <div className="flex-grow">
         {location && coords.length !== 0 && (

@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import CreateMission from "../../components/Main/CreateMission";
 import couponIcon from "../../assets/coupon2.svg";
 import cls from "../utils/cls";
-import { kmHistory } from "../../data/dummy";
+import { kmHistory, username } from "../../data/dummy";
 import yongyong from "../../assets/icon.svg";
 import mainpageBtnIcon1 from "../../assets/mainpage_btn_icon1.svg";
 import mainpageBtnIcon2 from "../../assets/mainpage_btn_icon2.svg";
@@ -89,7 +89,7 @@ const MainPage = () => {
             <section className="bg-[#fff] rounded-12 flex flex-col gap-46 pb-40 mb-14">
               <div className="p-20 flex justify-between items-end">
                 <div className="text-primary-gray font-semibold text-18">
-                  <h3>{`${import.meta.env.VITE_USER_NAME}`}님이</h3>
+                  <h3>{username}님이</h3>
                   <h3>지금까지 달성한 거리</h3>
                 </div>
                 <div className="text-primary-gray">
