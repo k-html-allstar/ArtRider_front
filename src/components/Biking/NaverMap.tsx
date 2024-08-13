@@ -17,6 +17,8 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
   const [marker, setMarker] = useState<naver.maps.Marker | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [start, setStart] = useState<boolean>(false);
+  const [spotMarker, setSpotMarker] = useState<naver.maps.Marker | null>(null); // Spot Marker 상태 추가
+  const [isFinished, setIsFinished] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window;
@@ -82,11 +84,11 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
       }
 
       const markerContent = `
-                <div style="back: 2px solid white">
-                    <div style="border: 6.5px solid rgb(228, 111, 90); background-color: white;  border-radius: 50%; width: 20px; height: 20px">
-                    </div>
-                </div>
-            `;
+              <div style="back: 2px solid white">
+                  <div style="border: 6.5px solid rgb(228, 111, 90); background-color: white;  border-radius: 50%; width: 20px; height: 20px">
+                  </div>
+              </div>
+          `;
 
       // 새로운 마커 생성
       const newMarker = new naver.maps.Marker({
@@ -102,6 +104,42 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
       setMarker(newMarker);
     }
   }, [location, map]);
+
+  // Spot Marker
+  useEffect(() => {
+    const { naver } = window;
+
+    if (map) {
+      const x = 127.2404362018919;
+      const y = 37.28178745513513;
+      const newLocation = new naver.maps.LatLng(y, x);
+
+      // 기존 Spot Marker 삭제
+      if (spotMarker) {
+        spotMarker.setMap(null);
+      }
+
+      const markerContent = `
+            <div style="back: 2px solid white">
+                <div style="border: 4px solid #16BE5C; background-color: white;  border-radius: 50%; width: 20px; height: 20px">
+                </div>
+            </div>
+          `;
+
+      // 새로운 마커 생성
+      const newSpotMarker = new naver.maps.Marker({
+        position: newLocation,
+        map,
+        icon: {
+          content: markerContent,
+          anchor: new naver.maps.Point(10, 10), // 마커의 위치 설정
+        },
+      });
+
+      // 마커 상태 업데이트
+      setSpotMarker(newSpotMarker);
+    }
+  }, [map]);
 
   useEffect(() => {
     const { naver } = window;
@@ -139,8 +177,35 @@ const NaverMap = ({ location, coords, historyCoords }: NaverMapProps) => {
         onClick={() => setStart(true)}
         style={{ transform: "translate(-50%, 50%)" }}
       >
-        {start ? <img src={startIcon} /> : <img src={pause} />}
+        {start ? <img src={startIcon} /> : <img src={pause} onClick={() => setIsFinished(true)} />}
       </div>
+
+      {isFinished && (
+        <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 z-[9999]">
+          <div
+            className="absolute top-[50%] left-[50%] z-[10000] w-362 h-292 rounded-20 bg-white p-20"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <div className="flex items-center justify-between ">
+              <div className="w-full flex flex-col items-center text-[#676767] font-19">
+                <div>축하해요!</div>
+                <div>목표한 거리를 모두 완주했어요</div>
+              </div>
+            </div>
+            <div className="flex items-center justify-center gap-10">
+              <button className="bg-[#E2E2E2] flex justify-center items-center py-15 px-20 rounded-12 text-[#727272] text-16 font-medium">
+                닫기
+              </button>
+              <button className=" flex-grow bg-bg-primary flex justify-center items-center py-15 rounded-12 text-white text-16 font-medium">
+                캘린더 탭으로 가기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
   3;
