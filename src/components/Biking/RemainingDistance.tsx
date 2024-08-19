@@ -1,10 +1,10 @@
 import cls from "../../pages/utils/cls";
 
-export default function RemainingDistance({
+const RemainingDistance = ({
   username,
   distance,
   ...props
-}: { username: string; distance: number } & React.HTMLAttributes<HTMLDivElement>) {
+}: { username: string; distance: number } & React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
@@ -23,4 +23,6 @@ export default function RemainingDistance({
       </div>
     </div>
   );
-}
+};
+
+export default RemainingDistance;

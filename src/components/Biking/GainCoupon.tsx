@@ -3,7 +3,7 @@ import cls from "../../pages/utils/cls";
 import couponIcon from "../../assets/coupon2.svg";
 import { useEffect, useState } from "react";
 
-export default function GainCoupon({ timeToShow }: { timeToShow: number }) {
+const GainCoupon = ({ timeToShow }: { timeToShow: number }) => {
   // timeToShow만큼 시간이 지나면 사라짐
   const [visible, setVisible] = useState(true);
 
@@ -35,4 +35,6 @@ export default function GainCoupon({ timeToShow }: { timeToShow: number }) {
       </div>
     </div>
   );
-}
+};
+
+export default GainCoupon;
