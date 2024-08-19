@@ -33,23 +33,23 @@ export const BASIC_ROUTES_URL = {
   calendar: {
     // 오타 수정: 'calender' -> 'calendar'
     name: "캘린더",
-    path: () => "/calendar", // 경로 수정
-    component: CalendarPage, // 적절한 컴포넌트 추가 필요
+    path: () => "/calendar",
+    component: CalendarPage,
   },
   bike: {
     name: "바이킹",
     path: () => "/bike",
-    component: BikePage, // 적절한 컴포넌트 추가 필요
+    component: BikePage,
   },
   flag: {
     name: "목표",
     path: () => "/flag",
-    component: FlagPage, // 적절한 컴포넌트 추가 필요
+    component: FlagPage,
   },
   coupon: {
     name: "쿠폰",
     path: () => "/coupon",
-    component: CouponPage, // 적절한 컴포넌트 추가 필요
+    component: CouponPage,
   },
 } as const;
 

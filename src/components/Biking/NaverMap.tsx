@@ -3,8 +3,8 @@ import Lottie from "react-lottie";
 import { spotProps } from "../../types/bikingTypes";
 import focused from "../../assets/focused.svg"; // 트래킹
 import focus from "../../assets/focus.svg";
-import startIcon from "../../assets/pause.svg";
-import pause from "../../assets/start.svg";
+import pause from "../../assets/pause.svg";
+import startIcon from "../../assets/start.svg";
 import animationData from "../../assets/award.json";
 import GainCoupon from "./GainCoupon";
 
