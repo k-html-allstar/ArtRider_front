@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { spotProps } from "../../types/bikingTypes";
 import { $axios } from "../../lib/axios";
+import axios from "axios";
 
 const useMission = (location: { lat: number; lng: number } | null, level: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -10,7 +11,7 @@ const useMission = (location: { lat: number; lng: number } | null, level: any) =
 
   const postMission = async (location: { lat: number; lng: number }) => {
     try {
-      const response = await $axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_API_AI_URL}/mission`,
         {
           latitude: location.lat,
