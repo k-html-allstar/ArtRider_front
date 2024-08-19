@@ -1,8 +1,6 @@
 import { useState } from "react";
 import arrowLeft from "../../assets/arrow_left.svg";
 import arrowRight from "../../assets/arrow_right.svg";
-import Creating from "./Creating";
-import Created from "./Created";
 import { useNavigate } from "react-router-dom";
 
 const levelMapping = {
@@ -11,17 +9,11 @@ const levelMapping = {
   hard: "어려움",
 };
 
-export default function CreateMission({
-  selectedBtn,
-  closeModal,
-}: {
-  selectedBtn: number | null;
-  closeModal: () => void;
-}) {
+const CreateMission = ({ closeModal }: { selectedBtn: number | null; closeModal: () => void }) => {
   const [level, setLevel] = useState<"easy" | "medium" | "hard">("easy");
   const navigate = useNavigate();
 
-  function changeLevel(btn: "left" | "right") {
+  const changeLevel = (btn: "left" | "right") => {
     if (btn === "left") {
       if (level === "medium") {
         setLevel("easy");
@@ -35,11 +27,12 @@ export default function CreateMission({
         setLevel("medium");
       }
     }
-  }
+  };
 
-  function createMission() {
+  const createMission = () => {
     navigate("/bike", { state: level });
-  }
+  };
+
   return (
     <div
       onClick={closeModal}
@@ -85,4 +78,6 @@ export default function CreateMission({
       </div>
     </div>
   );
-}
+};
+
+export default CreateMission;

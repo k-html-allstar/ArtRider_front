@@ -1,4 +1,4 @@
-export default function Backdrop({ ...props }: React.HTMLAttributes<HTMLDivElement>) {
+const Backdrop = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
@@ -15,4 +15,6 @@ export default function Backdrop({ ...props }: React.HTMLAttributes<HTMLDivEleme
       </div>
     </div>
   );
-}
+};
+
+export default Backdrop;

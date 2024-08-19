@@ -1,6 +1,6 @@
 import DragonIcon from "../../assets/icon2.svg";
 
-export default function Created() {
+const Created = () => {
   return (
     <div className="h-full flex flex-col items-center justify-center gap-20">
       <div className="flex justify-center items-center rounded-full w-80 h-80 bg-bg-secondary">
@@ -12,4 +12,6 @@ export default function Created() {
       </div>
     </div>
   );
-}
+};
+
+export default Created;

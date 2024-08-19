@@ -1,7 +1,7 @@
 import Lottie from "react-lottie";
 import animationData from "../../assets/strategy-map.json";
 
-export default function Creating() {
+const Creating = () => {
   return (
     <div className="p-20 flex flex-col items-center gap-10">
       <Lottie
@@ -21,4 +21,6 @@ export default function Creating() {
       </span>
     </div>
   );
-}
+};
+
+export default Creating;
